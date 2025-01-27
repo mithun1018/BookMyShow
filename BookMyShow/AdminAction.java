@@ -1,5 +1,7 @@
 package BookMyShow;
 
+import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Scanner;
@@ -33,7 +35,7 @@ public class AdminAction {
             } else if (adminChoice == 3) {
 
             } else if (adminChoice == 4) {
-                 AdminAction.viewTheatre(scan);
+                 AdminAction.viewTheatre();
             }
 
         }
@@ -63,8 +65,8 @@ public class AdminAction {
         String enteredLocation = scan.nextLine();
         if (BookMyShow.getLocationArrayList().contains(enteredLocation)) {
             System.out.println("enter Theatre name");
-            String theatre = scan.nextLine();
-            if (BookMyShow.getTheatreArrayList().keySet().contains(theatre)) {
+            String theatreName = scan.nextLine();
+            if (BookMyShow.getTheatreHashMap().keySet().contains(theatreName)) {
                 System.out.println("Theatre Already Exist");
                 return;
             }
@@ -73,6 +75,7 @@ public class AdminAction {
             HashMap<String, Screen> dupScreenHashMap = new HashMap<>();
             for (int j = 0; j < screenCount; j++) {
                 AdminAction.addScreen(scan, dupScreenHashMap);
+                BookMyShow.getTheatreHashMap().put(theatreName,new Theatre(theatreName,enteredLocation,dupScreenHashMap));
             }
             return;
         }
@@ -98,15 +101,63 @@ public class AdminAction {
         }
     }
 
-    public static void viewTheatre(Scanner scan) {
-        if (!BookMyShow.getTheatreArrayList().isEmpty()) {
+    public static void viewTheatre() {
+        if (!BookMyShow.getTheatreHashMap().isEmpty()) {
             int i = 1;
-            for (var dupTheatre : BookMyShow.getTheatreArrayList().keySet()) {
-                System.out.println(i + dupTheatre.);
-                i++;
-            }
+                System.out.println("Available Theatre: ");
+                for (String key : BookMyShow.getTheatreHashMap().keySet()) {
+                    System.out.println(i + " - " + key);
+                    i++;
+                    System.out.println("Available Screen: ");
+                    for (var screen : BookMyShow.getTheatreHashMap().get(key).getScreenHashMap().entrySet()) {
+                        System.out.println("  " + screen.getKey());
+                    }
+                }
 
         }
+    }
+    public static void addMovie(Scanner scan){
+        Theatre theatre=null;
+        System.out.println("enter the movie Name: ");
+        String movieName=scan.nextLine();
+        System.out.println("enter the movie Date:");
+        LocalDate date = LocalDate.parse(scan.nextLine(),BookMyShow.getDateFormatter());
+        System.out.println("enter the duration (minutes)");
+        long duration=Long.parseLong(scan.nextLine());
+        for (String dupLocation : BookMyShow.getLocationArrayList()) {
+            System.out.println("-"+dupLocation);
+        }
+        System.out.println("enter the location");
+        String location=scan.nextLine();
+        if (BookMyShow.getLocationArrayList().contains(location)) {
+            for (String availabletheatre : BookMyShow.getTheatreHashMap().keySet()) {
+                System.out.println(" - " + availabletheatre);
+            }
+            System.out.println("enter the Theatre Name: ");
+            String theatreName = scan.nextLine();
+            if (BookMyShow.getTheatreHashMap().containsKey(theatreName)) ;
+            {
+                theatre = BookMyShow.getTheatreHashMap().get(theatreName);
+                for (var screens : theatre.getScreenHashMap().keySet()) {
+                    System.out.println(" - " + screens);
+                }
+                System.out.println("enter the Screen name: ");
+                String screenName = scan.nextLine();
+                if (theatre.getScreenHashMap().containsKey(screenName)){
+                    Screen screen=theatre.getScreenHashMap().get(screenName);
+                    System.out.println("Enter the show Start Time: ");
+                    LocalTime startTime=LocalTime.parse(scan.nextLine(),BookMyShow.getTimeFormatter());
+                    LocalTime endTime=startTime.plusMinutes(duration+30);
+                    System.out.println("enter the Show Date: ");
+                    LocalDate showDate=LocalDate.parse(scan.nextLine(),BookMyShow.getDateFormatter());
+                    Show newShow=new Show(startTime,endTime,showDate);
+                    ArrayList<Movie> newMovie=new ArrayList<>();
+                    newMovie.add(new Movie(movieName,date,duration,location,theatre,screen,newShow));
+                    BookMyShow.getMovieHashMap().put(movieName,newMovie);
+                }
+            }
+        }
+
     }
 }
 
