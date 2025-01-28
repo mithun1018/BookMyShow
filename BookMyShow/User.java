@@ -2,10 +2,12 @@ package BookMyShow;
 public class User {
     private String username;
     private String password;
-    public User(String username,String password)//to get username and password
+    private String userLocation;
+    public User(String username,String password,String userLocation)//to get username and password
     {
         this.username=username;
         this.password=password;
+        this.userLocation=userLocation;
     }
     public String getUsername(){
         return username;
@@ -13,8 +15,6 @@ public class User {
     public String getPassword(){
         return password;
     }
-
-
-
+    public String getUserLocation() {return userLocation;}
 }
 

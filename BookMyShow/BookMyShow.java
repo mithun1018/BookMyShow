@@ -14,31 +14,26 @@ public class BookMyShow {
     private static HashMap<String,ArrayList<Movie>> MovieHashMap=new HashMap<>();
     private static DateTimeFormatter dateFormatter=DateTimeFormatter.ofPattern("dd-MM-yyyy");
     private static DateTimeFormatter timeFormatter=DateTimeFormatter.ofPattern("HH-mm");
+
+
     public static ArrayList<User> getUserArrayList(){
         return userArrayList;
     }
     public static ArrayList<Admin> getAdminArrayList(){
         return adminArrayList;
     }
-
-
     public static ArrayList<String> getLocationArrayList() {
         return locationArrayList;
     }
-
-
     public static HashMap<String, Theatre> getTheatreHashMap() {
         return theatreHashMap;
     }
-
     public static DateTimeFormatter getDateFormatter() {
         return dateFormatter;
     }
-
     public static DateTimeFormatter getTimeFormatter() {
         return timeFormatter;
     }
-
     public static HashMap<String, ArrayList<Movie>> getMovieHashMap() {
         return MovieHashMap;
     }
