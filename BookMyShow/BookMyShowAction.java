@@ -46,7 +46,7 @@ public class BookMyShowAction {
                 }
                 else {
                     System.out.println("login successful");
-                    UserAction.userAction(scan,currentUser);
+                    UserAction.showMovie(scan,currentUser);
                 }
 
             } else if (choice==3) {

@@ -16,5 +16,8 @@ public class User {
         return password;
     }
     public String getUserLocation() {return userLocation;}
+    public void setUserLocation(String location){
+        this.userLocation=location;
+    }
 }
 
