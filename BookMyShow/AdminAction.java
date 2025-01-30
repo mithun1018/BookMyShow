@@ -64,7 +64,7 @@ public class AdminAction {
     public static void addTheatre(Scanner scan) {
         int i = 1;
         for (String dupLocation : BookMyShow.getLocationArrayList()) {
-            System.out.println(i + dupLocation);
+            System.out.println(i +" - "+ dupLocation);
             i++;
         }
         System.out.println("enter Location ");
@@ -96,15 +96,19 @@ public class AdminAction {
         }
         System.out.println("enter the no.of Seats: ");
         int seatCount = Integer.parseInt(scan.nextLine());
-        System.out.println("enter the no.of grid :");
+        while (true){
+            System.out.println("enter the no.of grid :");
         String gridNumber = scan.nextLine();
         var grid = Utilities.addGrid(seatCount, gridNumber);
-        dupScreenHashMap.put(screenName, new Screen(screenName, seatCount, gridNumber, grid));
         if (grid != null) {
+            dupScreenHashMap.put(screenName, new Screen(screenName, seatCount, gridNumber, grid));
             for (var dupGrid : grid.entrySet()) {
                 System.out.println(dupGrid);
             }
+            break;
         }
+            System.out.println("enter correct grid...\n");
+    }
     }
 
     public static void viewTheatre() {
@@ -195,7 +199,7 @@ public class AdminAction {
                                        }
                                        break ;
                                    }
-                                        Show newShow = new Show(startTime, endTime,date);
+                                        Show newShow = new Show(startTime, endTime,date,screen);
                                         screen.getShowHashSet().add(newShow);
                                         ArrayList<Movie> movieList=BookMyShow.getMovieHashMap().get(movieName);
                                         if(movieList==null)

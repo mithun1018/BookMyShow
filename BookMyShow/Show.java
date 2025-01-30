@@ -7,10 +7,12 @@ public class Show {
     private LocalTime startTime;
     private LocalTime endTime;
     private LocalDate date;
-    public Show(LocalTime startTime,LocalTime endTime,LocalDate date){
+    private Screen screen;
+    public Show(LocalTime startTime,LocalTime endTime,LocalDate date,Screen screen){
         this.startTime=startTime;
         this.endTime=endTime;
         this.date=date;
+        this.screen=screen;
     }
 
     public LocalTime getStartTime() {
@@ -23,5 +25,9 @@ public class Show {
 
     public LocalDate getDate() {
         return date;
+    }
+
+    public Screen getScreen() {
+        return screen;
     }
 }
