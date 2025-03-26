@@ -116,35 +116,68 @@ public class UserAction {
             }
         }
         for (String theatreName : theatreContainShow.keySet()) {
-            System.out.println("Theatre Name" + theatreName);
+            System.out.println("Theatre Name: " + theatreName);
             for (var showInTheatre : theatreContainShow.get(theatreName)) {
                 System.out.println("show timing: " + showInTheatre.getStartTime() + "-" + showInTheatre.getEndTime());
             }
         }
-        while (true){
+        while (true) {
             System.out.println("enter the Theatre Name: ");
-        String theatreName = scan.nextLine();
-        System.out.println("Enter the show timing: ");
-        LocalTime showTime = LocalTime.parse(scan.nextLine(), BookMyShow.getTimeFormatter());
-        Screen screen = null;
-        for (var theatreKey : theatreContainShow.get(theatreName)) {
-            if (theatreKey.getStartTime().equals(showTime)) {
-                screen = theatreKey.getScreen();
-                break;
+            String theatreName = scan.next();
+            System.out.println("Enter the show timing (hh-mm): ");
+            LocalTime showTime = LocalTime.parse(scan.next(), BookMyShow.getTimeFormatter());
+            Show currentShow=null;
+            HashSet<Show> dupShow=theatreContainShow.get(theatreName);
+            for(Show show:dupShow){
+                if(show.getStartTime().equals(showTime)){
+                    currentShow=show;
+                }
             }
-        }
-        if (screen==null){
-            continue;
-        }
+            Screen screen = null;
+            for (var theatreKey : theatreContainShow.get(theatreName)) {
+                if (theatreKey.getStartTime().equals(showTime)) {
+                    screen = theatreKey.getScreen();
+                    break;
+                }
+            }
+            if (screen == null) {
+                continue;
+            }
             System.out.println();
-            for (var seat:screen.getSeatGridHashMap().entrySet()){
-                System.out.println(seat.);
+            for (var seat : currentShow.getShowHashMap().entrySet()) {
+                System.out.println(seat.getKey() + " " + seat.getValue());
             }
-    }
 
 
-
-
+            while (true) {
+                System.out.println("Enter the no.of tickets to book: ");
+                int noOfTickets = Integer.parseInt(scan.next());
+                HashMap<Character, ArrayList<String>> dupSeat = new HashMap<>();
+                int seatCount=screen.getSeatNumber();
+                String gridNumber=screen.getGrid();
+                dupSeat=Utilities.addGrid(seatCount,gridNumber);
+                for (int i = 0; i < noOfTickets; i++) {
+                    System.out.println("enter the row of tickets to book (A1): ");
+                    String choicedSeat = scan.next();
+                    char choicedRow = choicedSeat.toUpperCase().charAt(0);
+                    int seatNum = Integer.parseInt(choicedSeat.substring(1))-1;
+                    dupSeat.get(choicedRow).set(seatNum, "X");
+                    for( var selectedSeat:dupSeat.keySet()){
+                        System.out.println(selectedSeat+" "+dupSeat.get(selectedSeat));
+                    }
+                }
+                System.out.println("did you want to Confirm the Tickets:\n1.Yes\n2.No");
+                int confirmChoice=Integer.parseInt(scan.next());
+                if(confirmChoice==1){
+                    currentShow.setShowHashMap(dupSeat);
+                } else if (confirmChoice == 2) {
+                    break;
+                }
+                else {
+                    System.out.println("Invalid Input");
+                }
+            }
+        }
     }
 
 

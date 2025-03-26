@@ -33,6 +33,9 @@ public class Screen {
     public HashMap<Character, ArrayList<String>> getSeatGridHashMap() {
         return seatGridHashMap;
     }
+    public void setSeatGridHashMap(HashMap<Character, ArrayList<String>> seatGridHashMap){
+        this.seatGridHashMap=seatGridHashMap;
+    }
 
     public HashSet<Show> getShowHashSet() {
         return showHashSet;

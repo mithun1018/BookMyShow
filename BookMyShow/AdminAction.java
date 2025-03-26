@@ -97,7 +97,7 @@ public class AdminAction {
         System.out.println("enter the no.of Seats: ");
         int seatCount = Integer.parseInt(scan.nextLine());
         while (true){
-            System.out.println("enter the no.of grid :");
+            System.out.println("enter the no.of grid (5*5*5) :");
         String gridNumber = scan.nextLine();
         var grid = Utilities.addGrid(seatCount, gridNumber);
         if (grid != null) {
@@ -130,7 +130,7 @@ public class AdminAction {
         Theatre theatre = null;
         System.out.println("enter the movie Name: ");
         String movieName = scan.nextLine();
-        System.out.println("enter the movie Date:");
+        System.out.println("enter the movie Date(dd-mm-yyyy):");
         LocalDate date = LocalDate.parse(scan.nextLine(), BookMyShow.getDateFormatter());
         System.out.println("enter the duration (minutes)");
         long duration = Long.parseLong(scan.nextLine());
@@ -185,21 +185,25 @@ public class AdminAction {
                                     LocalTime startTime=null;
                                     LocalTime endTime=null;
                                    m: while (true) {
-                                       System.out.println("Enter the show Start Time: ");
+                                       System.out.println("Enter the show Start Time(hh-mm): ");
                                        startTime = LocalTime.parse(scan.nextLine(), BookMyShow.getTimeFormatter());
                                        endTime = startTime.plusMinutes(duration + 30);
                                        for (var allShow : screen.getShowHashSet()) {
-                                           if (date.equals(allShow.getDate())){
+                                           if (date.equals(allShow.getDate())) {
                                                if (!(startTime.isBefore(allShow.getStartTime()) && endTime.isBefore(allShow.getStartTime())
                                                        || startTime.isAfter(allShow.getEndTime()) && endTime.isAfter(allShow.getEndTime()))) {
                                                    System.out.println("show already exist...");
                                                    continue m;
                                                }
+                                           }
                                        }
-                                       }
-                                       break ;
+                                       break;
                                    }
-                                        Show newShow = new Show(startTime, endTime,date,screen);
+                                        HashMap<Character, ArrayList<String>> dupSeat = new HashMap<>();
+                                        int seatCount=screen.getSeatNumber();
+                                        String gridNumber=screen.getGrid();
+                                        dupSeat=Utilities.addGrid(seatCount,gridNumber);
+                                        Show newShow = new Show(startTime, endTime,date,screen,dupSeat);
                                         screen.getShowHashSet().add(newShow);
                                         ArrayList<Movie> movieList=BookMyShow.getMovieHashMap().get(movieName);
                                         if(movieList==null)

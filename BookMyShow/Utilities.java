@@ -23,10 +23,11 @@ public class Utilities {
                     if(col<stringOFGrid.length-1){
                         seatArangement.add("<SPACE>");
                     }
-                    seatGridHashMap.put(alphabet,seatArangement);
-                    alphabet++;
-                    seatCount=seatCount-totalGrid;
+
                 }
+                seatGridHashMap.put(alphabet,seatArangement);
+                alphabet++;
+                seatCount=seatCount-totalGrid;
             }
             return seatGridHashMap;
         }
